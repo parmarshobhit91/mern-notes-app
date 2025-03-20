@@ -22,12 +22,16 @@ const Note = mongoose.model("Note", NoteSchema);
 // Routes
 app.get("/notes", async(req, res) => res.json(await Note.find()));
 app.post("/notes", async(req, res) => {
-    const newNote = new Note({ text: req.body.text});
-    await newNote.save()
-        .then(() => console.log("Note added successfully"))
-        .catch((err) => console.error(err));
-    res.json(newNote);
-})
+    try {
+        const newNote = new Note({ text: req.body.text});
+        const savedNote = await newNote.save();
+        console.log("Note added successfully");
+        res.json(savedNote);
+    } catch (err) {
+        console.error("Error adding note: ", err);
+        res.status(500).json({error: "Internal server error"});
+    }
+    })
 app.delete("/notes/:id", async(req, res) => {
     await Note.findByIdAndDelete(req.params.id);
     res.json({ message: "Note deleted successfully" });
