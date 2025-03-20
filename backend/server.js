@@ -4,7 +4,12 @@ const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+}));
 app.use(express.json());
 const PORT = 3000;
 
@@ -21,6 +26,8 @@ const Note = mongoose.model("Note", NoteSchema);
 
 // Routes
 app.get("/notes", async(req, res) => res.json(await Note.find()));
+  
+
 app.post("/notes", async(req, res) => {
     try {
         const newNote = new Note({ text: req.body.text});
