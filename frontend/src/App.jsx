@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "./App.css";
 
-const API_URL = "http://localhost:5000/notes";
+const API_URL = "http://localhost:3000/notes";
 
 function App() {
   const [notes, setNotes] = useState([]);
@@ -21,7 +21,7 @@ function App() {
 
   const deleteNote = (id) => {
     axios.delete(`${API_URL}/${id}`).then(()=>{
-      setNotes(notes.filter((note) => note._id) !== id);
+      setNotes(notes.filter((note) => note._id !== id));
     });
   };
 
@@ -35,11 +35,11 @@ function App() {
       />
       <button onClick={addNote}>Add Note</button>
       <ul>
-        {notes.map((note) => {
+        {notes.map((note) => (
           <li key={note._id}>
             {note.text} <button onClick={ () => deleteNote(note._id)}>X</button>
           </li>
-        })}
+        ))}
       </ul>
     </div>
   )
