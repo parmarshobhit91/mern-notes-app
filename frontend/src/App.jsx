@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "./App.css";
 
-const API_URL = "http://localhost:3000/notes";
+const API_URL = "https://mern-notes-app-htet.onrender.com/notes";
 
 function App() {
   const [notes, setNotes] = useState([]);
